@@ -6,11 +6,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function TodoList() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [todoList, setTodoList] = useState<TodoListItem[]>([])
   const [completedList, setCompletedList] = useState<TodoListItem[]>([])
-  console.log("completedList : ", completedList)
+  // console.log("completedList : ", completedList)
   const [notCompletedList, setNotCompletedList] = useState<TodoListItem[]>([])
-  console.log("notCompletedList : ", notCompletedList)
+  // console.log("notCompletedList : ", notCompletedList)
 
   //Swagger 문서에 정의된 API 경로를 통해 GET 요청을 보내 할 일 리스트를 가져오는 훅입니다.
   useEffect(()=> {

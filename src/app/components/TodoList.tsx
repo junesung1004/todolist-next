@@ -12,6 +12,32 @@ export default function TodoList() {
   const [notCompletedList, setNotCompletedList] = useState<TodoListItem[]>([])
   console.log("notCompletedList : ", notCompletedList)
 
+  //Swagger 문서에 정의된 API 경로를 통해 GET 요청을 보내 할 일 리스트를 가져오는 훅입니다.
+  useEffect(()=> {
+    const fetchTodoData = async() => {
+      try{
+        const res = await fetch("https://assignment-todolist-api.vercel.app/api/junesung/items")
+
+        if(!res.ok) {
+          throw new Error("할 일 목록을 가져오는데 실패했습니다.")
+        }
+
+        const data = await res.json()
+        // console.log("데이터베이스에 저장된 data : ", data)
+        const completed = data.filter((todo:TodoListItem)=> todo.isCompleted)
+        const notCompleted = data.filter((todo:TodoListItem) => !todo.isCompleted)
+        setCompletedList(notCompleted)
+        setNotCompletedList(completed)
+        setTodoList(data)
+        
+      } catch(error) {
+        console.error("할 일 가져오기 실패 :", error)
+        throw new Error("할 일 가져오기 기능이 실패했습니다.")
+      }
+    }
+    fetchTodoData()
+  },[])
+
   // isCompleted 의 상태를 변화시키는 이벤트 함수
   const handleClickIsCompletedUpdate = async(id: string) => {
     try {
@@ -43,37 +69,23 @@ export default function TodoList() {
         throw new Error("아이템 수정 실패")
       }
       alert("아이템 수정이 완료되었습니다.")
+
+      //상태 업데이트 (리렌더링)
+      setTodoList((prevList) => {
+        const updatedList = prevList.map((todo)=> 
+          todo.id === id ? {...todo, isCompleted: !todo.isCompleted} : todo
+        )
+        const completed = updatedList.filter((todo) => !todo.isCompleted);
+        const notCompleted = updatedList.filter((todo) => todo.isCompleted);
+        setCompletedList(completed);
+        setNotCompletedList(notCompleted);
+        return updatedList;
+      })
     } catch(error) {
       console.error("수정이 실패했습니다.")
       throw new Error("수정 기능이 실패했습니다.")
     }
   }
-
-  //Swagger 문서에 정의된 API 경로를 통해 GET 요청을 보내 할 일 리스트를 가져오는 훅입니다.
-  useEffect(()=> {
-    const fetchTodoData = async() => {
-      try{
-        const res = await fetch("https://assignment-todolist-api.vercel.app/api/junesung/items")
-
-        if(!res.ok) {
-          throw new Error("할 일 목록을 가져오는데 실패했습니다.")
-        }
-
-        const data = await res.json()
-        // console.log("데이터베이스에 저장된 data : ", data)
-        const completed = data.filter((todo:TodoListItem)=> todo.isCompleted)
-        const notCompleted = data.filter((todo:TodoListItem) => !todo.isCompleted)
-        setCompletedList(completed)
-        setNotCompletedList(notCompleted)
-        setTodoList(data)
-        
-      } catch(error) {
-        console.error("할 일 가져오기 실패 :", error)
-        throw new Error("할 일 가져오기 기능이 실패했습니다.")
-      }
-    }
-    fetchTodoData()
-  },[])
 
   return(
     <article className="flex flex-col md:flex-row  gap-8">
@@ -86,7 +98,7 @@ export default function TodoList() {
         height={36}
         />
         {completedList.map((todo, idx)=> (
-          <div key={idx} className="p-2 flex-1 bg-[#F9FAFB] flex items-center gap-3 border border-[2px] border-black rounded-full">
+          <div key={idx} className="p-2  bg-[#F9FAFB] flex items-center gap-3 border border-[2px] border-black rounded-full">
               <Image 
               src={"/images/Property 1=Default.svg"}
               alt="아이콘"

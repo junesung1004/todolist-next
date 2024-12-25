@@ -20,7 +20,7 @@ export default function Searchbar() {
     return () => window.removeEventListener("resize", updateScreenSize); // 컴포넌트 언마운트 시 이벤트 리스너 제거
   }, [isSmallScreen]);
 
-  //할 일 추가하는 이벤트 코드입니다. (마우스 이벤트)
+  //할 일 추가하는 이벤트 코드 (마우스 이벤트)
   const clickAddHandler = async (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -28,6 +28,7 @@ export default function Searchbar() {
       alert("할 일을 입력해 주세요")
       return
     }
+
     const newTodo = {
       name,
     }
@@ -58,15 +59,15 @@ export default function Searchbar() {
     setName("")
   }
 
-  //할 일 추가하는 이벤트 코드입니다. (키보드 이벤트)
+  //할 일 추가하는 이벤트 코드 (키보드 이벤트)
   const enterAddHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === "Enter") {
-      //e as any를 하는 이유는 이벤트 대상이 키보드 vs 마우스이기 때문에 타입 오류를 방지하기 위해 설정한 코드
+      //e as 를 하는 이유는 이벤트 대상이 키보드 vs 마우스이기 때문에 타입 오류를 방지하기 위해 설정한 코드
       clickAddHandler(e as unknown as React.MouseEvent<HTMLButtonElement>);
     } 
   }
 
-  //사용자가 입력한 값을 감지하여 name 상태에 반영하는 이벤트입니다.
+  //사용자가 입력한 값을 감지하여 name 상태에 반영하는 이벤트
   const onChangeText = (e:React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }

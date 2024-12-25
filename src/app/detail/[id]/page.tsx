@@ -119,7 +119,7 @@ export default function Page() {
       name: text,
       memo: memo,
       imageUrl: imageUrl, 
-      isCompleted: true,
+      isCompleted:todoItem?.isCompleted,
     }
 
     if(!text && !memo) {

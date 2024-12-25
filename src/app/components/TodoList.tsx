@@ -45,7 +45,7 @@ export default function TodoList() {
       const res = await fetch(`https://assignment-todolist-api.vercel.app/api/junesung/items/${id}`)
 
       if(!res.ok) {
-        console.error("해당 id 요청 기능 실패")
+        console.log("해당 id 요청 기능 실패")
         throw new Error("해당 id가 존재하지 않습니다.")
       }
       const data = await res.json()
@@ -66,7 +66,7 @@ export default function TodoList() {
       })
 
       if(!updateItem.ok) {
-        console.error("아이템 수정 실패")
+        console.log("아이템 수정 실패")
         throw new Error("아이템 수정 실패")
       }
       alert("아이템 수정이 완료되었습니다.")

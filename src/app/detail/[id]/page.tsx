@@ -5,44 +5,173 @@ import { TodoListItem } from "@/types/todoItemType";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Button from "@/app/components/Button";
+import {  useRouter } from "next/navigation";
 
 export default function Page() {
   const params = useParams<{id:string}>()
+  const router = useRouter()
   const [todoItem, setTodoItem] = useState<TodoListItem>()
-  console.log("todoItem : ", todoItem)
+  //console.log("todoItem : ", todoItem)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-  // const [imgSrc, setImgSrc] = useState<string | null>(null); // 이미지 미리보기 상태 관리
+  const [imgSrc, setImgSrc] = useState<string | null>(null); // 이미지 미리보기 상태 관리
 
-  // 파일 선택 후 미리보기 이미지 생성하는 코드입니다.
-  // const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0]
-  //   if(!file) {
-  //     console.error("파일이 선택되지 않았습니다.")
-  //     alert("파일을 선택해주세요.");
-  //     return
-  //   }
+  const [memo, setMemo] = useState<string>("")
+  const [text, setText] = useState<string>("")
 
-  //   //FileReader를 사용한 이미지 미리보기
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     //미리보기 이미지
-  //     setImgSrc(reader.result as string)
-  //   }
-  //   reader.readAsDataURL(file)
-  // }
+  // 할 일 제목을 수정하는 코드
+  const handleChangeTodoText = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value)
+  }
 
-  // 사진 업로드하는 버튼 이벤트입니다.
+  // 메모 내용을 수정하는 코드
+  const handleChangeMemo = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMemo(e.target.value)
+  }
+
+  //파일 이름이 영어로만 이루어졌는지 유효성 검사하는 코드
+  const isValidFileName = (fileName: string) => {
+    const regex = /^[a-zA-Z._-]+$/; // 영어만 있는지 체크하는 validation
+    return regex.test(fileName);
+  }
+
+  // 파일 선택 후 미리보기 이미지 생성하는 코드
+  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if(!file) {
+      console.error("파일이 선택되지 않았습니다.")
+      alert("파일을 선택해주세요.");
+      return
+    }
+
+    // 파일 이름 검사
+    if (!isValidFileName(file.name)) {
+      alert("이미지 파일 이름은 영어로만 이루어져야 합니다.");
+      return;
+    }
+
+    //FileReader를 사용한 이미지 미리보기
+    const reader = new FileReader();
+    reader.onload = () => {
+      //미리보기 이미지
+      setImgSrc(reader.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  // 사진 파일을 등록하는 버튼 이벤트
   const handleClickImageUpload = () => {
     if(fileInputRef.current) {
       fileInputRef.current.click()
     }
   }
 
-  // 사진(url) + 메모의 내용을 업로드하는 버튼 이벤트입니다.
-  const handleClickPostUpload = () =>{}
+  // 사진(url) + 메모의 내용을 데이터베이스에 업로드하는 버튼 이벤트
+  const handleClickPostUpload = async() => {
+    // 1. 등록된 이미지 파일이 있거나, 새로 등록할 이미지 파일이 없을 때
+    if(!todoItem?.imageUrl && !imgSrc) {
+      console.error("등록된 이미지 파일이 없습니다.")
+      alert("이미지 파일을 등록 후 수정하기 버튼을 눌러주세요")
+      return
+    }
 
-  // swagger의 get 요청으로 특정 아이템의 정보를 가져오는 코드입니다.
+    const formData = new FormData()
+    const file = fileInputRef.current?.files?.[0]
+
+    let imageUrl = todoItem?.imageUrl
+
+    if(file) {
+        console.log("선택된 파일 : ", file)
+        formData.append("image", file)
+
+        try {
+          const uploadRes = await fetch("https://assignment-todolist-api.vercel.app/api/junesung/images/upload", {
+            method: "POST",
+            body: formData,
+          })
+
+          if(!uploadRes.ok) {
+            console.error("이미지 업로드 실패 : ", uploadRes.text)
+            throw new Error("이미지 업로드 기능 실패했습니다.")
+          }
+
+          const uploadData = await uploadRes.json()
+          console.log("업로드된 데이터 : ", uploadData)
+          imageUrl = uploadData.url
+
+          router.push("/")
+
+          if(!imageUrl) {
+            console.log("응답에 imageUrl이 없습니다.")
+            throw new Error("응답에 imageUrl이 없습니다.")
+          }
+        } catch(error) {
+          console.error("이미지 업로드 실패 : ", error)
+          alert("이미지 업로드가 실패했습니다.")
+          return
+        }
+    } else {
+      console.log("데이터베이스에 등록된 이미지 파일이 있어서 기존 등록된 이미지 파일로 대체됩니다.")
+    }
+
+    // 2. 수정할 아이템
+    const updateData = {
+      name: text,
+      memo: memo,
+      imageUrl: imageUrl, 
+      isCompleted: true,
+    }
+
+    if(!text && !memo) {
+      alert("할 일 제목, 메모 내용, 이미지 파일을 전부 적용 후 수정완료 버튼을 눌러주세요.")
+      return
+    }
+
+    try {
+      const updataItem = await fetch(`https://assignment-todolist-api.vercel.app/api/junesung/items/${params.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData)
+      })
+
+      if(!updataItem) {
+        console.error("아이템 수정 실패")
+        throw new Error("아이템 수정 실패")
+      }
+
+      alert("아이템 수정이 완료되었습니다.")
+      router.push("/")
+    } catch(error) {
+      console.error("수정 요청 실패 : ", error)
+      alert("아이템 수정 중 오류가 발생했습니다.")
+    }
+  }
+
+  // 해당 id의 아이템을 삭제하는 버튼 이벤트
+  const handleClickPostDelete = async() => {
+    if(window.confirm("정말로 이 아이템을 삭제하시겠습니까?")) {
+      try {
+        const deleteItem = await fetch(`https://assignment-todolist-api.vercel.app/api/junesung/items/${params.id}`, {
+          method: "DELETE"
+        })
+        // 요청이 성공한 경우
+        if (deleteItem.ok) {
+          alert("아이템이 성공적으로 삭제되었습니다.");
+          router.push("/")
+        } else {
+          console.error("아이템 삭제 실패", deleteItem);
+          alert("삭제하기 기능이 실패했습니다.")
+        }
+      } catch(error) {
+        console.error("삭제하기 실패 : ", error)
+        alert("삭제하기 기능이 실패했습니다.")
+      }
+    }
+  }
+
+  // swagger의 get 요청으로 특정 아이템의 정보를 가져오는 코드
   useEffect(()=> {
     const fetchTodoItem = async() => {
       if(!params.id) {
@@ -69,18 +198,34 @@ export default function Page() {
     fetchTodoItem()
   },[params.id])
 
+  // todoItem의 memo && name속성값이 존재하면 값을 적용하는 코드
+  useEffect(()=> {
+    if(todoItem?.memo) {
+      setMemo(todoItem.memo)
+    }
+    if(todoItem?.name) {
+      setText(todoItem.name)
+    }
+  },[todoItem])
+
   return (
     <main className="max-w-[1200px] m-auto bg-white h-screen py-10">
       {/* todo 할 일 name */}
       <div className="flex justify-center text-center mb-10 mr-5 ml-5 lg:mr-32 lg:ml-32 m-auto p-2 flex-1 bg-[#F9FAFB] flex items-center gap-3 border border-[2px] border-black rounded-3xl cursor-pointer">
-          <Image 
+        <Image 
           src={"/images/Property 1=Default.svg"}
           alt="아이콘"
           width={32}
           height={32}
-          />
-          <p className="underline font-bold">{todoItem?.name}</p>
+        />
+        <input 
+          type="text"
+          value={text}
+          onChange={handleChangeTodoText}
+          className="underline font-bold bg-[#F9FAFB] border-none outline-none"
+        />
       </div>
+
 
       {/* 이미지 && 메모장 컨테이너 */}
       <div className="flex gap-10 mb-5 mr-5 ml-5 lg:mr-32 lg:ml-32  flex-col md:flex-row">
@@ -96,23 +241,32 @@ export default function Page() {
                 type="file" 
                 name="todoPicture" 
                 accept="image/*"
-                // onChange={handleFileChange}
+                onChange={handleFileChange}
                 />
-                <Image
-                  src={"/images/img.svg"}
-                  alt="플러스 버튼 아이콘"
-                  width={64}
-                  height={64}
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                />
-                <Image
-                  src={"/images/Type=Plus.svg"}
-                  alt="플러스 버튼 아이콘"
-                  width={64}
-                  height={64}
-                  className="absolute bottom-2 right-2 cursor-pointer"
-                  onClick={handleClickImageUpload}
-                />
+                {todoItem?.imageUrl || imgSrc ? (
+                  <img
+                    src={todoItem?.imageUrl ?? imgSrc ?? undefined} // 이미지 URL을 사용
+                    alt="미리보기 이미지"
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain w-full h-full rounded-2xl"
+                  />
+                  ) : (
+                    <Image
+                      src={"/images/img.svg"} // 기본 이미지 파일 아이콘
+                      alt="이미지 파일 아이콘"
+                      width={64}
+                      height={64}
+                      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                    />
+                  ) }
+
+                  <Image
+                    src={"/images/Type=Plus.svg"} // 플러스 버튼 아이콘
+                    alt="플러스 버튼 아이콘"
+                    width={64}
+                    height={64}
+                    className="absolute bottom-2 right-2 cursor-pointer"
+                    onClick={handleClickImageUpload}
+                  />
               </div>
             </form>
         </div>
@@ -124,15 +278,17 @@ export default function Page() {
           </p>
 
           <Image 
-          src={"/images/memo.svg"}
-          alt="메모장 배경색 이미지"
-          className="rounded-2xl"
-          width={588}
-          height={311}
+            src={"/images/memo.svg"}
+            alt="메모장 배경색 이미지"
+            className="rounded-2xl"
+            width={588}
+            height={311}
           />
-           <textarea 
+          <textarea 
             className="absolute cursor-pointer hover:outline-none focus:outline-none top-0 left-0 w-full h-full px-4 py-2 rounded-2xl bg-transparent text-center z-10 pt-24" 
             placeholder="메모를 입력하세요"
+            value={memo}
+            onChange={handleChangeMemo}
           ></textarea>
         </div>
 
@@ -140,8 +296,8 @@ export default function Page() {
       
       {/* 버튼 컨테이너 */}
       <div className=" bottom-0 flex gap-5 justify-center lg:justify-end mr-5 ml-5 lg:mr-32 lg:ml-32">
-      <Button text={"수정완료"} onClick={handleClickPostUpload} buttonColor={"#E2E8F0"} textColor={"black"}/>
-      <Button text={"수정완료"} onClick={handleClickPostUpload} buttonColor={"#F43F5E"} textColor={"white"}/>
+        <Button text={"수정완료"} onClick={handleClickPostUpload} buttonColor={"#E2E8F0"} textColor={"black"}/>
+        <Button text={"삭제하기"} onClick={handleClickPostDelete} buttonColor={"#F43F5E"} textColor={"white"}/>
       </div>
     </main>
   );

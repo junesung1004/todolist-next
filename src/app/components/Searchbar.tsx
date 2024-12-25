@@ -69,7 +69,7 @@ export default function Searchbar() {
         onChange={onChangeText}
         onKeyDown={enterAddHandler}
         />
-        <Button text={"+ 추가하기"} onClick={clickAddHandler}/>
+        <Button text={"+ 추가하기"} onClick={clickAddHandler} buttonColor={"#E2E8F0"} textColor={"black"}/>
       </form>
     </div>
   )

@@ -15,22 +15,22 @@ export default function Page() {
   // const [imgSrc, setImgSrc] = useState<string | null>(null); // 이미지 미리보기 상태 관리
 
   // 파일 선택 후 미리보기 이미지 생성하는 코드입니다.
-  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if(!file) {
-      console.error("파일이 선택되지 않았습니다.")
-      alert("파일을 선택해주세요.");
-      return
-    }
+  // const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0]
+  //   if(!file) {
+  //     console.error("파일이 선택되지 않았습니다.")
+  //     alert("파일을 선택해주세요.");
+  //     return
+  //   }
 
-    //FileReader를 사용한 이미지 미리보기
-    const reader = new FileReader();
-    reader.onload = () => {
-      //미리보기 이미지
-      setImgSrc(reader.result as string)
-    }
-    reader.readAsDataURL(file)
-  }
+  //   //FileReader를 사용한 이미지 미리보기
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     //미리보기 이미지
+  //     setImgSrc(reader.result as string)
+  //   }
+  //   reader.readAsDataURL(file)
+  // }
 
   // 사진 업로드하는 버튼 이벤트입니다.
   const handleClickImageUpload = () => {

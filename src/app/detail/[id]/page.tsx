@@ -131,7 +131,7 @@ export default function Page() {
           height={311}
           />
            <textarea 
-            className="absolute cursor-pointer hover:outline-none focus:outline-none top-0 left-0 w-full h-full px-4 py-2 rounded-2xl bg-transparent text-center z-10 pt-36" 
+            className="absolute cursor-pointer hover:outline-none focus:outline-none top-0 left-0 w-full h-full px-4 py-2 rounded-2xl bg-transparent text-center z-10 pt-24" 
             placeholder="메모를 입력하세요"
           ></textarea>
         </div>

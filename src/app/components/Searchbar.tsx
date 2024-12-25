@@ -1,11 +1,24 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 
 export default function Searchbar() {
   const [name, setName] = useState<string>("")
+  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+
+  // 윈도우 크기 변화에 따른 버튼 텍스트 변경 상태 업데이트
+  useEffect(() => {
+    const updateScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 700);
+    };
+    
+    updateScreenSize(); // 초기 로드 시 크기 체크
+    window.addEventListener("resize", updateScreenSize); // 리사이즈 이벤트 리스너 등록
+
+    return () => window.removeEventListener("resize", updateScreenSize); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+  }, [isSmallScreen]);
 
   //할 일 추가하는 이벤트 코드입니다. (마우스 이벤트)
   const clickAddHandler = async (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +82,8 @@ export default function Searchbar() {
         onChange={onChangeText}
         onKeyDown={enterAddHandler}
         />
-        <Button text={"+ 추가하기"} onClick={clickAddHandler} buttonColor={"#E2E8F0"} textColor={"black"}/>
+        
+        <Button text={isSmallScreen ? "+" : "+ 추가하기"} onClick={clickAddHandler} buttonColor={"#E2E8F0"} textColor={"black"}/>
       </form>
     </div>
   )

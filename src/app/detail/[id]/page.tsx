@@ -96,7 +96,7 @@ export default function Page() {
                 type="file" 
                 name="todoPicture" 
                 accept="image/*"
-                onChange={handleFileChange}
+                // onChange={handleFileChange}
                 />
                 <Image
                   src={"/images/img.svg"}

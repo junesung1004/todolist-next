@@ -83,7 +83,7 @@ export default function TodoList() {
         return updatedList;
       })
     } catch(error) {
-      console.error("수정이 실패했습니다.")
+      console.error("수정이 실패했습니다.", error)
       throw new Error("수정 기능이 실패했습니다.")
     }
   }
@@ -97,6 +97,7 @@ export default function TodoList() {
         alt="todo-할일 로고"
         width={101}
         height={36}
+        priority
         />
         {completedList.map((todo, idx)=> (
           <div key={idx} className="p-2  bg-[#F9FAFB] flex items-center gap-3 border border-[2px] border-black rounded-full">
@@ -105,6 +106,7 @@ export default function TodoList() {
               alt="아이콘"
               width={32}
               height={32}
+              priority
               className="cursor-pointer"
               onClick={()=>handleClickIsCompletedUpdate(todo.id)}
               />
@@ -120,6 +122,7 @@ export default function TodoList() {
       <Image 
       src={"/images/done.svg"}
       alt="todo-할일 로고"
+      priority
       width={101}
       height={36}
       />
@@ -128,6 +131,7 @@ export default function TodoList() {
               <Image 
               src={"/images/Property 1=Frame 2610233.svg"}
               alt="아이콘"
+              priority
               width={32}
               height={32}
               className="cursor-pointer"

@@ -215,6 +215,7 @@ export default function Page() {
         <Image 
           src={"/images/Property 1=Default.svg"}
           alt="아이콘"
+          priority
           width={32}
           height={32}
         />
@@ -253,6 +254,7 @@ export default function Page() {
                     <Image
                       src={"/images/img.svg"} // 기본 이미지 파일 아이콘
                       alt="이미지 파일 아이콘"
+                      priority
                       width={64}
                       height={64}
                       className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
@@ -262,6 +264,7 @@ export default function Page() {
                   <Image
                     src={"/images/Type=Plus.svg"} // 플러스 버튼 아이콘
                     alt="플러스 버튼 아이콘"
+                    priority
                     width={64}
                     height={64}
                     className="absolute bottom-2 right-2 cursor-pointer"
@@ -280,6 +283,7 @@ export default function Page() {
           <Image 
             src={"/images/memo.svg"}
             alt="메모장 배경색 이미지"
+            priority
             className="rounded-2xl"
             width={588}
             height={311}

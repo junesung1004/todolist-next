@@ -49,7 +49,7 @@ export default function Searchbar() {
   const enterAddHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === "Enter") {
       //e as any를 하는 이유는 이벤트 대상이 키보드 vs 마우스이기 때문에 타입 오류를 방지하기 위해 설정한 코드
-      clickAddHandler(e as any)
+      clickAddHandler(e as unknown as React.MouseEvent<HTMLButtonElement>);
     }
   }
 

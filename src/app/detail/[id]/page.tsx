@@ -12,7 +12,7 @@ export default function Page() {
   console.log("todoItem : ", todoItem)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [imgSrc, setImgSrc] = useState<string | null>(null); // 이미지 미리보기 상태 관리
+  // const [imgSrc, setImgSrc] = useState<string | null>(null); // 이미지 미리보기 상태 관리
 
   // 파일 선택 후 미리보기 이미지 생성하는 코드입니다.
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ export default function Page() {
       }
     }
     fetchTodoItem()
-  },[])
+  },[params.id])
 
   return (
     <main className="max-w-[1200px] m-auto bg-white h-screen py-10">

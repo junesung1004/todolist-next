@@ -20,11 +20,11 @@ export default function TodoList() {
         const res = await fetch("https://assignment-todolist-api.vercel.app/api/junesung/items");
 
         if (!res.ok) {
-          throw new Error("할 일 목록을 가져오는데 실패했습니다.");
+          throw new Error("할 일 목록을 가져오는데 실패했습니다..");
         }
 
         const data = await res.json();
-        // console.log("데이터베이스에 저장된 data : ", data)
+        // console.log("데이터베이스에 저장된 data : ", data...)
         const completed = data.filter((todo: TodoListItem) => todo.isCompleted);
         const notCompleted = data.filter((todo: TodoListItem) => !todo.isCompleted);
         setCompletedList(notCompleted);

@@ -64,14 +64,11 @@
 
 </details>
 
-<details><summary>4. 메인인</summary>
+<details><summary>4. 메인 화면</summary>
 
 ![메인 페이지](https://github.com/junesung1004/todolist-next/blob/main/public/readme/main.png)
 
-- MBTI 유형 검사 페이지입니다.
-- 16개 문항으로 이루어져 있으며, 1문항당 2개의 선택지가 있습니다.
-- 선택지(TestCard)
-- 프로그레스 바
+- do it 메인 화면 UI입니다다
 
 </details>
 
@@ -91,7 +88,7 @@
 
 #### FE
 
-[![Next.js]][React-url] [![TypeScript]][TypeScript-url] [![TailwindCSS]][TailwindCSS-url]
+[![Next.js]][Next-url] [![TypeScript]][TypeScript-url] [![TailwindCSS]][TailwindCSS-url]
 
 #### INFRA
 

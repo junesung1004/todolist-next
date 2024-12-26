@@ -5,17 +5,13 @@
     <img src="https://github.com/junesung1004/todolist-next/blob/main/public/images/Size%3DLarge.svg" alt="Logo" width="160" height="160">
   </a>
 
-  <h3 align="center">너 T야?(are-you-T)</h3>
+  <h3 align="center">do it !</h3>
 
   <p align="center">
-    MBTI 포털 서비스: MBTI 테스트를 바탕으로 유형끼리 공감하며 소통할 수 있는 커뮤니티
+    간단하게 오늘 할 일을 추가 후 디테일 페이지에서 사진과 메모로 기록을 해놓을 수 있는 반응형 플랫폼 웹사이트트
     <br />
     <br />
-    <a href="https://are-you-t.vercel.app">데모 사이트</a>
-    ·
-    <a href="https://github.com/are-you-T/client/issues">버그 신고하기</a>
-    ·
-    <a href="https://github.com/are-you-T/client/issues">기능 요청하기</a>
+    <a href="https://todogogo.netlify.app">데모 사이트</a>
   </p>
 </div>
 

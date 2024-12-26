@@ -88,7 +88,7 @@
 
 #### FE
 
-[Next-url] [![TypeScript]][TypeScript-url] [![TailwindCSS]][TailwindCSS-url]
+[![Next.js]] [![TypeScript]][TypeScript-url] [![TailwindCSS]][TailwindCSS-url]
 
 #### INFRA
 

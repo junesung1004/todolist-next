@@ -90,43 +90,93 @@ export default function TodoList() {
       {/* TO DO 목록 */}
       <section className="flex flex-col gap-5 flex-1 ">
         <Image src={"/images/todo.svg"} alt="todo-할일 로고" width={101} height={36} priority />
-        {completedList.map((todo, idx) => (
-          <div key={idx} className="p-2  bg-[#F9FAFB] flex items-center gap-3 border border-[2px] border-black rounded-full">
+        {completedList.length > 0 ? (
+          completedList.map((todo, idx) => (
+            <div key={idx} className="p-2 bg-[#F9FAFB] flex items-center gap-3 border border-[2px] border-black rounded-full">
+              <Image
+                src={"/images/Property 1=Default.svg"}
+                alt="아이콘"
+                width={32}
+                height={32}
+                priority
+                className="cursor-pointer"
+                onClick={() => handleClickIsCompletedUpdate(todo.id)}
+              />
+              <Link href={`/detail/${todo.id}`}>
+                <p className="cursor-pointer">{todo.name}</p>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <div className="w-[240px] h-[240px] relative">
             <Image
-              src={"/images/Property 1=Default.svg"}
-              alt="아이콘"
-              width={32}
-              height={32}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:hidden"
+              src="/images/Group 33698.png"
+              alt="할 일 추가 이미지"
+              width={240}
+              height={240}
+              objectFit="cover"
+              layout="intrinsic"
               priority
-              className="cursor-pointer"
-              onClick={() => handleClickIsCompletedUpdate(todo.id)}
             />
-            <Link href={`/detail/${todo.id}`}>
-              <p className="cursor-pointer">{todo.name}</p>
-            </Link>
+            <Image
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden sm:block"
+              src="/images/small.png"
+              alt="할 일 추가 이미지"
+              width={240}
+              height={240}
+              objectFit="cover"
+              layout="intrinsic"
+              priority
+            />
           </div>
-        ))}
+        )}
       </section>
 
       {/* DONE 목록 */}
       <section className="flex flex-col gap-5  flex-1">
         <Image src={"/images/done.svg"} alt="todo-할일 로고" priority width={101} height={36} />
-        {notCompletedList.map((todo, idx) => (
-          <div key={idx} className="p-2  bg-[#EDE9FE] flex items-center gap-3 border border-[2px] border-black rounded-full">
+        {notCompletedList.length > 0 ? (
+          notCompletedList.map((todo, idx) => (
+            <div key={idx} className="p-2  bg-[#EDE9FE] flex items-center gap-3 border-[2px] border-black rounded-full">
+              <Image
+                src={"/images/Property 1=Frame 2610233.svg"}
+                alt="아이콘"
+                priority
+                width={32}
+                height={32}
+                className="cursor-pointer"
+                onClick={() => handleClickIsCompletedUpdate(todo.id)}
+              />
+              <Link href={`/detail/${todo.id}`}>
+                <p className="cursor-pointer">{todo.name}</p>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <div className="w-[240px] h-[240px] relative">
             <Image
-              src={"/images/Property 1=Frame 2610233.svg"}
-              alt="아이콘"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:hidden"
+              src="/images/Group 33697.png"
+              alt="할 일 추가 이미지"
+              width={240}
+              height={240}
+              objectFit="cover"
+              layout="intrinsic"
               priority
-              width={32}
-              height={32}
-              className="cursor-pointer"
-              onClick={() => handleClickIsCompletedUpdate(todo.id)}
             />
-            <Link href={`/detail/${todo.id}`}>
-              <p className="cursor-pointer">{todo.name}</p>
-            </Link>
+            <Image
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden sm:block"
+              src="/images/small2.png"
+              alt="할 일 추가 이미지"
+              width={240}
+              height={240}
+              objectFit="cover"
+              layout="intrinsic"
+              priority
+            />
           </div>
-        ))}
+        )}
       </section>
     </article>
   );

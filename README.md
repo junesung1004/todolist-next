@@ -30,7 +30,7 @@
 
  <div align="center">
 	  <img src="https://raw.githubusercontent.com/junesung1004/todolist-next/refs/heads/main/public/images/profile.webp" />
-	 <p>💡차언정(24세): "나의 MBTI 유형에 대한 사람들의 생각이 궁금해!"</p>
+	 <p>💡박준성: "오늘 나의 할 일을 저장 후 계획적으로 움직여보자!"</p>
  </div>
 
 ## 기능 목록

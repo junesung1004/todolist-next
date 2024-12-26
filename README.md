@@ -29,7 +29,7 @@
 **◼️ 페르소나**
 
  <div align="center">
-	  <img src="https://github.com/are-you-T/client/assets/87935496/3adae08a-34ed-41ea-b7e2-ed64d4e1ba99" />
+	  <img src="https://raw.githubusercontent.com/junesung1004/todolist-next/refs/heads/main/public/images/profile.webp" />
 	 <p>💡차언정(24세): "나의 MBTI 유형에 대한 사람들의 생각이 궁금해!"</p>
  </div>
 

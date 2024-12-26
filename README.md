@@ -68,7 +68,7 @@
 
 ![메인 페이지](https://github.com/junesung1004/todolist-next/blob/main/public/readme/main.png)
 
-- do it 메인 화면 UI입니다다
+- do it 메인 화면 UI입니다
 
 </details>
 
@@ -76,9 +76,9 @@
 
 ![디테일 페이지](https://github.com/junesung1004/todolist-next/blob/main/public/readme/detail.png)
 
-- 디테일 페이지에서 이미지파일, 메모를 작성하여 정보를 업데이트 할 수 있다.
-- 기존에 등록했던 정보가 있으면 수정하여 업데이트 할 수 있다.
-- 삭제하기 누르면 해당 id로 조회하여 해당 아이템의 정보를 삭제 할 수 있다.
+- 디테일 페이지에서 이미지 파일, 메모를 작성하여 정보를 업데이트 할 수 있다
+- 기존에 등록했던 정보가 있으면 수정하여 업데이트 할 수 있다
+- 삭제하기 누르면 해당 id로 조회하여 해당 아이템의 정보를 삭제 할 수 있다
 
 </details>
 
@@ -94,7 +94,7 @@
 
 #### INFRA
 
-[![Vercel]][Vercel-url]
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
 
 <br />
 

@@ -30,7 +30,7 @@
 
  <div align="center">
 	  <img src="https://raw.githubusercontent.com/junesung1004/todolist-next/refs/heads/main/public/images/profile.webp" />
-	 <p>💡박준성: "오늘 나의 할 일을 저장 후 계획적으로 움직여보자!"</p>
+	 <p>💡박준성: "오늘 나의 할 일을 기록록 후 계획적으로 움직여보자!"</p>
  </div>
 
 ## 기능 목록

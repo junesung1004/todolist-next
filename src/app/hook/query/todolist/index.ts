@@ -1,3 +1,0 @@
-const useGetTodoList = () => {
-  return useQuery;
-};

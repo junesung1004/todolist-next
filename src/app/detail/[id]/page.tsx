@@ -30,10 +30,10 @@ export default function Page() {
   };
 
   //파일 이름이 영어로만 이루어졌는지 유효성 검사하는 코드
-  const isValidFileName = (fileName: string) => {
-    const regex = /^[a-zA-Z._-]+$/; // 영어만 있는지 체크하는 validation
-    return regex.test(fileName);
-  };
+  // const isValidFileName = (fileName: string) => {
+  //   const regex = /^[a-zA-Z._-]+$/; // 영어만 있는지 체크하는 validation
+  //   return regex.test(fileName);
+  // };
 
   // 파일 선택 후 미리보기 이미지 생성하는 코드
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,10 +52,10 @@ export default function Page() {
     }
 
     // 파일 이름 검사
-    if (!isValidFileName(file.name)) {
-      alert("이미지 파일 이름은 영어로만 이루어져야 합니다.");
-      return;
-    }
+    // if (!isValidFileName(file.name)) {
+    //   alert("이미지 파일 이름은 영어로만 이루어져야 합니다.");
+    //   return;
+    // }
 
     //FileReader를 사용한 이미지 미리보기
     const reader = new FileReader();
@@ -276,7 +276,7 @@ export default function Page() {
         <div className="flex flex-1 h-[311px] relative">
           <p className="absolute left-1/2 top-5  transform -translate-x-1/2 z-10 text-[#9F5829] font-bold">Memo</p>
 
-          <Image src={"/images/memo.svg"} alt="메모장 배경색 이미지" priority className="rounded-2xl" width={588} height={311} />
+          <Image src={"/images/memo.svg"} alt="메모장 배경색 이미지" layout="intrinsic" priority className="rounded-2xl" width={588} height={311} />
           <textarea
             className="absolute cursor-pointer hover:outline-none focus:outline-none top-0 left-0 w-full h-full px-4 py-2 rounded-2xl bg-transparent text-center z-10 pt-24"
             placeholder="메모를 입력하세요"

@@ -1,4 +1,4 @@
-name: Next.js CI/CD with Vercel
+name: Next.js CI/CD with Vercel and Codecov
 
 on:
   push:
@@ -10,32 +10,46 @@ jobs:
   test-and-build:
     runs-on: ubuntu-latest
     steps:
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # 4. Run ESLint
       - name: Run ESLint
         run: npm run lint
 
+      # 5. Run Jest tests (with coverage)
       - name: Run Jest tests
         run: npm test
 
+      # 6. Upload coverage to Codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # GitHub Secrets에서 Codecov 토큰 가져오기
+
+      # 7. Build Next.js app
       - name: Build Next.js app
         run: npm run build
 
   deploy:
-    needs: test-and-build # 위 테스트 & 빌드가 성공하면 실행됨.......
+    needs: test-and-build # 위 테스트 & 빌드가 성공하면 실행됨
     runs-on: ubuntu-latest
     steps:
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Deploy to Vercel
       - name: Deploy to Vercel
         run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}

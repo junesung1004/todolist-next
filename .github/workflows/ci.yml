@@ -32,13 +32,17 @@ jobs:
       - name: Run Jest tests
         run: npm test
 
-      # 6. Upload coverage to Codecov
+      # 6. Run TypeScript type checking
+      - name: Run TypeScript type checking
+        run: npx tsc --noEmit # TypeScript 타입 검사
+
+      # 7. Upload coverage to Codecov
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # GitHub Secrets에서 Codecov 토큰 가져오기
 
-      # 7. Build Next.js app
+      # 8. Build Next.js app
       - name: Build Next.js app
         run: npm run build
 

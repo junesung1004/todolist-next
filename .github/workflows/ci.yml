@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
   deploy:
-    needs: test-and-build # 위 테스트 & 빌드가 성공하면 실행됨.....
+    needs: test-and-build # 위 테스트 & 빌드가 성공하면 실행됨.......
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 
-import "@testing-library/jest-dom"; // Jest 확장 matcher 사용
+import "@testing-library/jest-dom"; // Jest 확장 matcher 사용....
 import Button from "./Button";
 
 describe("Button 컴포넌트 테스트", () => {

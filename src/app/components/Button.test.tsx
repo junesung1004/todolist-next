@@ -4,7 +4,7 @@ import "@testing-library/jest-dom"; // Jest 확장 matcher 사용....
 import Button from "./Button";
 
 describe("Button 컴포넌트 테스트", () => {
-  test("버튼이 올바르게 렌더링되는지 확인", () => {
+  test("버튼이 올바르게 렌더링되는지 확인!!!", () => {
     render(<Button text="클릭" onClick={() => {}} buttonColor="blue" textColor="white" />);
 
     // 버튼이 렌더링되었는지 확인
